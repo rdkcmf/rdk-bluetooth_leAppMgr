@@ -145,7 +145,7 @@ size_t write_response(void *ptr, size_t size, size_t nmemb, struct res_data *res
 
     resp->size += (size * nmemb);
 
-    BTRLEMGRLOG_DEBUG("data at %p size=%ld nmemb=%ld \n\n", ptr, size, nmemb);
+    BTRLEMGRLOG_DEBUG("data at %p size=%d nmemb=%d \n\n", ptr, size, nmemb);
     buff = (char*)realloc(resp->buff,resp->size + 1);
 
     if(buff)
@@ -231,7 +231,7 @@ int updateLimitBeaconDetection()
                 t2 = timeToSleep;
             }
             rand_t = getRandomTimeInSec(timeToSleep);
-            BTRLEMGRLOG_INFO("Sleep for rand_t = %d - cur_t = %d start_t = %d timeToSleep = %d\n", rand_t, cur_t, start_t, timeToSleep);
+            BTRLEMGRLOG_INFO("Sleep for rand_t = %d - cur_t = %ld start_t = %ld timeToSleep = %d\n", rand_t, cur_t, start_t, timeToSleep);
 
             while (rand_t--) {
                 if (bTerminateBeaconDetect == true) {
@@ -311,7 +311,7 @@ int setCustomerPreference()
       else
       {
         curl_easy_getinfo(pCurl, CURLINFO_RESPONSE_CODE, &response_code);
-        BTRLEMGRLOG_INFO("Curl Call Completed, Response = %d\n",response_code);
+        BTRLEMGRLOG_INFO("Curl Call Completed, Response = %ld\n",response_code);
  
         if(response_code==200)
         {

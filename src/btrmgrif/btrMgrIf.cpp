@@ -91,8 +91,8 @@ BtrMgrIf::eventCallback (
                             stTileProp.m_isLeDevice = event.m_discoveredDevice.m_isLowEnergyDevice;
                             stTileProp.m_eventType  = LEMGR_EVENT_DEVICE_DISCOVERY_UPDATE;
                             stTileProp.m_uuid       = deviceProperty.m_serviceInfo.m_profileInfo[i].m_uuid;
-                            BTRLEMGRLOG_DEBUG("This is Tile device. - %s\n", m_instance->getServiceUuid());
-                            stTileProp.m_serviceUuid= m_instance->getServiceUuid();
+                            stTileProp.m_serviceUuid=m_instance->getServiceUuid();
+                            BTRLEMGRLOG_DEBUG("This is Tile device. - %s\n", stTileProp.m_serviceUuid.c_str());
                             stTileProp.m_signalLevel = event.m_discoveredDevice.m_signalLevel;
                             stTileProp.m_isServDataPresent = false;/*Initial value, wil be overwritten when servData is present*/
                             for(int k=0;k<BTRMGR_MAX_DEVICE_PROFILE;k++)
@@ -293,7 +293,7 @@ BtrMgrIf::eventCallback (
         if(BTRMGR_DEVICE_TYPE_TILE == event.m_deviceOpInfo.m_deviceType) {
 
             if(strlen(event.m_deviceOpInfo.m_notifyData)) {
-                BTRLEMGRLOG_INFO ("\tReceived BTRMGR_EVENT_DEVICE_OP_READY Event for \"%s\" (%llu), Value : [%d]. \n", event.m_deviceOpInfo.m_name, event.m_deviceOpInfo.m_deviceHandle, event.m_deviceOpInfo.m_notifyData);
+                BTRLEMGRLOG_INFO ("\tReceived BTRMGR_EVENT_DEVICE_OP_READY Event for \"%s\" (%llu), Value : [%s]. \n", event.m_deviceOpInfo.m_name, event.m_deviceOpInfo.m_deviceHandle, event.m_deviceOpInfo.m_notifyData);
                 stBtMgrIfLeProp stTileProp;
                 {
                     stTileProp.m_name.clear();
@@ -743,11 +743,11 @@ BtrMgrIf::pushEvent (
 
     std::lock_guard<std::mutex> guard(m_mutex);
 
-    BTRLEMGRLOG_INFO("current queue size = %lu. Pushing event (type = %d, device id %llu, mac %s).\n",
+    BTRLEMGRLOG_INFO("current queue size = %u. Pushing event (type = %d, device id %llu, mac %s).\n",
                      m_queue.size(), ptr->m_eventType, ptr->m_devId, ptr->m_macAddr.c_str());
 
     m_queue.push(*ptr);
-    BTRLEMGRLOG_INFO("[postTileEventMsQ] Posting Tile [(%lld) ,( %s)] properties to message queue (size %lu).\n",
+    BTRLEMGRLOG_INFO("[postTileEventMsQ] Posting Tile [(%lld) ,( %s)] properties to message queue (size %u).\n",
                      ptr->m_devId, ptr->m_macAddr.c_str(), m_queue.size());
     m_condition.notify_one();
     BTRLEMGRLOG_INFO("[postTileEventMsQ] Notified Tile receiver_LeEventQ.. \n");
@@ -767,7 +767,7 @@ BtrMgrIf::popEvent (
     }
     auto lePropObj = m_queue.front();
 
-    BTRLEMGRLOG_INFO("current queue size = %lu. Popping event (type = %d, device id %llu, mac %s).\n",
+    BTRLEMGRLOG_INFO("current queue size = %u. Popping event (type = %d, device id %llu, mac %s).\n",
                      m_queue.size(), lePropObj.m_eventType, lePropObj.m_devId, lePropObj.m_macAddr.c_str());
     BTRLEMGRLOG_INFO("[receiver_LeEventQ] Tile device Id (%llu),  Mac address (%s) in message queue ( of size %d).\n",
                      lePropObj.m_devId, lePropObj.m_macAddr.c_str(), m_queue.size());

@@ -910,11 +910,11 @@ BtrTileMgr::notifyTileInfoCloud (
 
                 if(response_code == 200) { /* Message posted successfully if get http response code is 200 OK */
                     ret = LE_NOTIFY_SEND_SUCCESSFULLY;
-                    BTRLEMGRLOG_DEBUG("Successfully posted to server, response code (%d). \n", response_code);
+                    BTRLEMGRLOG_DEBUG("Successfully posted to server, response code (%ld). \n", response_code);
                 }
                 else {
                     ret = LE_NOTIFY_SEND_FAILED;
-                    BTRLEMGRLOG_DEBUG("Failed to Post Tile message, returns with error code (%d). \n", response_code);
+                    BTRLEMGRLOG_DEBUG("Failed to Post Tile message, returns with error code (%ld). \n", response_code);
                 }
             }
 
@@ -1635,7 +1635,7 @@ BtrTileMgr::processTileCmdRequest_stage2 (
                 tile_uuid = cJSON_GetObjectItem( cjson, "tile_uuid")->valuestring;
 
                 if(tile_uuid == NULL) {
-                    BTRLEMGRLOG_ERROR("Failed to Ring for Tile [%s], since last command for MEP_TOA_OPEN_CHANNEL is for different tile (%s). \n",tile_uuid, m_stRingAttributes.tile_uuid.c_str());
+                    BTRLEMGRLOG_ERROR("Failed to Ring for Tile, since last command for MEP_TOA_OPEN_CHANNEL is for different tile (%s). \n", m_stRingAttributes.tile_uuid.c_str());
                 }
                 else {
                     BTRLEMGRLOG_INFO("Got the Request to Ring the Tile [%s]. \n",tile_uuid);
@@ -1734,7 +1734,7 @@ BtrTileMgr::processTileCmdRequest_stage2 (
         }
     }
     else {
-        BTRLEMGRLOG_INFO ("Failed to Ring tile (%llu) for MEP_TOA_OPEN_CHANNEL.\n", m_stRingAttributes.tile_uuid.c_str());
+        BTRLEMGRLOG_INFO ("Failed to Ring tile (%s) for MEP_TOA_OPEN_CHANNEL.\n", m_stRingAttributes.tile_uuid.c_str());
         m_stRingAttributes = empty;
     }
 
@@ -1914,7 +1914,7 @@ BtrTileMgr::checkRfcFeatureOfTileRing (
         }
     }
 
-    BTRLEMGRLOG_INFO("[%s] The RFC [%d] is [%s].\n", __FUNCTION__, rfc_ring_param.c_str(), (char* )((m_isTileRingFeatureEnabled)?"Enabled":"Disabled") );
+    BTRLEMGRLOG_INFO("[%s] The RFC [%s] is [%s].\n", __FUNCTION__, rfc_ring_param.c_str(), (char* )((m_isTileRingFeatureEnabled)?"Enabled":"Disabled") );
 }
 
 BTRLEMGR_Result_t
