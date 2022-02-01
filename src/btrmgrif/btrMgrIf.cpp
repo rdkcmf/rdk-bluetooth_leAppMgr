@@ -743,12 +743,12 @@ BtrMgrIf::pushEvent (
 
     std::lock_guard<std::mutex> guard(m_mutex);
 
-    BTRLEMGRLOG_INFO("current queue size = %u. Pushing event (type = %d, device id %llu, mac %s).\n",
-                     m_queue.size(), ptr->m_eventType, ptr->m_devId, ptr->m_macAddr.c_str());
+    BTRLEMGRLOG_INFO("current queue size = %llu. Pushing event (type = %d, device id %llu, mac %s).\n",
+                     (unsigned long long)m_queue.size(), ptr->m_eventType, ptr->m_devId, ptr->m_macAddr.c_str());
 
     m_queue.push(*ptr);
-    BTRLEMGRLOG_INFO("[postTileEventMsQ] Posting Tile [(%lld) ,( %s)] properties to message queue (size %u).\n",
-                     ptr->m_devId, ptr->m_macAddr.c_str(), m_queue.size());
+    BTRLEMGRLOG_INFO("[postTileEventMsQ] Posting Tile [(%lld) ,( %s)] properties to message queue (size %llu).\n",
+                     ptr->m_devId, ptr->m_macAddr.c_str(), (unsigned long long)m_queue.size());
     m_condition.notify_one();
     BTRLEMGRLOG_INFO("[postTileEventMsQ] Notified Tile receiver_LeEventQ.. \n");
 }
@@ -767,10 +767,10 @@ BtrMgrIf::popEvent (
     }
     auto lePropObj = m_queue.front();
 
-    BTRLEMGRLOG_INFO("current queue size = %u. Popping event (type = %d, device id %llu, mac %s).\n",
-                     m_queue.size(), lePropObj.m_eventType, lePropObj.m_devId, lePropObj.m_macAddr.c_str());
-    BTRLEMGRLOG_INFO("[receiver_LeEventQ] Tile device Id (%llu),  Mac address (%s) in message queue ( of size %d).\n",
-                     lePropObj.m_devId, lePropObj.m_macAddr.c_str(), m_queue.size());
+    BTRLEMGRLOG_INFO("current queue size = %llu. Popping event (type = %d, device id %llu, mac %s).\n",
+                     (unsigned long long)m_queue.size(), lePropObj.m_eventType, lePropObj.m_devId, lePropObj.m_macAddr.c_str());
+    BTRLEMGRLOG_INFO("[receiver_LeEventQ] Tile device Id (%llu),  Mac address (%s) in message queue ( of size %llu).\n",
+                     lePropObj.m_devId, lePropObj.m_macAddr.c_str(), (unsigned long long)m_queue.size());
 
     m_queue.pop();
 

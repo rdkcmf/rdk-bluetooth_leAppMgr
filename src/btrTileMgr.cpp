@@ -583,8 +583,8 @@ BtrTileMgr::notifyTileInfoCloud (
     case LE_TILE_NOTIFY_TYPE_RING_RAND_T_RESPONSE:
         {
             int isStagingEnv = access( "/tmp/.stagingTileUrl", F_OK );
-            BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %d, isStagingEnv = %d\n",
-                    m_stRingAttributes.current_HashID.length(),isStagingEnv);
+            BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %llu, isStagingEnv = %d\n",
+                    (unsigned long long)m_stRingAttributes.current_HashID.length(),isStagingEnv);
             if(m_stRingAttributes.current_HashID.length() && (0 == isStagingEnv)) {
                 pi8CloudURL = gStagingRingURL;
                 if(gStagingRingURL[0] == '\0') {
@@ -625,8 +625,8 @@ BtrTileMgr::notifyTileInfoCloud (
                 uri = "/api/v2/bte/device/tilestatus";
             }
 
-            BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %d, isStagingEnv = %d\n",
-                    m_stRingAttributes.current_HashID.length(),isStagingEnv);
+            BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %llu, isStagingEnv = %d\n",
+                    (unsigned long long)m_stRingAttributes.current_HashID.length(),isStagingEnv);
             if(m_stRingAttributes.current_HashID.length() && (0 == isStagingEnv)) {
                 notify_enable = true;
             }
@@ -642,8 +642,8 @@ BtrTileMgr::notifyTileInfoCloud (
     case LE_TILE_NOTIFY_TYPE_RING_CMD_RESPONSE:
     {
         int isStagingEnv = access( "/tmp/.stagingTileUrl", F_OK );
-        BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %d, isStagingEnv = %d\n",
-                m_stRingAttributes.current_HashID.length(),isStagingEnv);
+        BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %llu, isStagingEnv = %d\n",
+                (unsigned long long)m_stRingAttributes.current_HashID.length(),isStagingEnv);
         if(m_stRingAttributes.current_HashID.length() && (0 == isStagingEnv)) {
             pi8CloudURL = gStagingRingURL;
             if(gStagingRingURL[0] == '\0') {
@@ -711,8 +711,8 @@ BtrTileMgr::notifyTileInfoCloud (
                 uri = "/api/v2/bte/device/tilestatus";
             }
 
-            BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %d, isStagingEnv = %d\n",
-                    m_stRingAttributes.current_HashID.length(),isStagingEnv);
+            BTRLEMGRLOG_INFO("m_stRingAttributes.current_HashID.length() = %llu, isStagingEnv = %d\n",
+                   (unsigned long long)m_stRingAttributes.current_HashID.length(),isStagingEnv);
             if(m_stRingAttributes.current_HashID.length() && (0 == isStagingEnv)) {
                 notify_enable = true;
             }
@@ -1037,7 +1037,7 @@ BtrTileMgr::print_LeDevPropMap (
 
     if(m_LeDevMap.size()) {
         short index = 1;
-        BTRLEMGRLOG_INFO("Total numbers of Tile device (%d) notified to cloud.\n", m_LeDevMap.size());
+        BTRLEMGRLOG_INFO("Total numbers of Tile device (%llu) notified to cloud.\n", (unsigned long long)m_LeDevMap.size());
         BTRLEMGRLOG_INFO("===============================================================================\n");
         for (auto it = m_LeDevMap.begin(); it!=m_LeDevMap.end(); ++it) {
             BtrLeDevProp *leObj = it->second;

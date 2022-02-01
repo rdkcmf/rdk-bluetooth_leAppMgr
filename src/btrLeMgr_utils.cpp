@@ -145,7 +145,7 @@ size_t write_response(void *ptr, size_t size, size_t nmemb, struct res_data *res
 
     resp->size += (size * nmemb);
 
-    BTRLEMGRLOG_DEBUG("data at %p size=%d nmemb=%d \n\n", ptr, size, nmemb);
+    BTRLEMGRLOG_DEBUG("data at %p size=%llu nmemb=%llu \n\n", ptr, (unsigned long long)size, (unsigned long long)nmemb);
     buff = (char*)realloc(resp->buff,resp->size + 1);
 
     if(buff)
@@ -798,7 +798,7 @@ char *encodeBase64(const unsigned char *input, int length)
     BIO_flush(b64);
     BIO_get_mem_ptr(b64, &bptr);
 
-    BTRLEMGRLOG_TRACE("Encoded Data (%s), length is (%d)\n",bptr->data, bptr->length);
+    BTRLEMGRLOG_TRACE("Encoded Data (%s), length is (%llu)\n",bptr->data, (unsigned long long)bptr->length);
     char *buff = (char *)malloc(bptr->length+1);
     memcpy(buff, bptr->data, bptr->length);
     buff[bptr->length] = 0;
@@ -816,7 +816,7 @@ bool  decodeBase64(const char *in_b64msg,unsigned char **out_decoded,size_t *dec
     BTRLEMGRLOG_TRACE("Entering...\n");
     size_t decodeLen = calcDecodeLength(in_b64msg);
 
-    BTRLEMGRLOG_DEBUG("Calculated Decode Length is [%d]\n",decodeLen);
+    BTRLEMGRLOG_DEBUG("Calculated Decode Length is [%llu]\n",(unsigned long long)decodeLen);
 
     *out_decoded = (unsigned char*)malloc(decodeLen + 1);
 
@@ -830,7 +830,7 @@ bool  decodeBase64(const char *in_b64msg,unsigned char **out_decoded,size_t *dec
         BIO_set_flags(bio, BIO_FLAGS_BASE64_NO_NL); //Do not use newlines to flush buffer
         *decodedlength = BIO_read(bio, *out_decoded, strlen(in_b64msg));
 
-        BTRLEMGRLOG_DEBUG("Read Decoded Length is [%d].\n",*decodedlength);
+        BTRLEMGRLOG_DEBUG("Read Decoded Length is [%llu].\n",(unsigned long long)*decodedlength);
 
         if(*decodedlength == decodeLen) //length should equal decodeLen, else something went horribly wrong
         {

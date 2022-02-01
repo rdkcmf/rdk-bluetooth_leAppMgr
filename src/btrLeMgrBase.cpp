@@ -148,11 +148,11 @@ BtrLeMgrBase::addToDiscoveryList (
 ) {
     if (m_LeDevList.find(stLeList->m_devId) == m_LeDevList.end()) {
         m_LeDevList.insert({stLeList->m_devId, stLeList});
-        BTRLEMGRLOG_INFO("Added to LE Discovered Devices list: device id (%llu), mac (%s), name (%s), empty (%d), count(%d),  RSSI (%d)\n",
-                         stLeList->m_devId, stLeList->m_macAddr.c_str(), stLeList->m_name.c_str(), m_LeDevList.empty(), m_LeDevList.size(), stLeList->m_signalLevel);
+        BTRLEMGRLOG_INFO("Added to LE Discovered Devices list: device id (%llu), mac (%s), name (%s), empty (%d), count(%llu),  RSSI (%d)\n",
+                         stLeList->m_devId, stLeList->m_macAddr.c_str(), stLeList->m_name.c_str(), m_LeDevList.empty(), (unsigned long long)m_LeDevList.size(), stLeList->m_signalLevel);
     }
     else {
-        BTRLEMGRLOG_INFO("Already in LE Discovered Devices list: device id (%llu), empty (%d), count(%d)\n", stLeList->m_devId, m_LeDevList.empty(), m_LeDevList.size());
+        BTRLEMGRLOG_INFO("Already in LE Discovered Devices list: device id (%llu), empty (%d), count(%llu)\n", stLeList->m_devId, m_LeDevList.empty(), (unsigned long long)m_LeDevList.size());
     }
 
     return LEMGR_RESULT_SUCCESS;
@@ -163,7 +163,7 @@ BtrLeMgrBase::isPresentInDiscoveryList (
     ui_long_long devId
 ) {
     bool found = (m_LeDevList.find(devId) != m_LeDevList.end());
-    BTRLEMGRLOG_INFO("%s in LE Discovered Devices list: device id (%llu), empty (%d), count(%d)\n", found ? "Found" : "Not found", devId, m_LeDevList.empty(), m_LeDevList.size());
+    BTRLEMGRLOG_INFO("%s in LE Discovered Devices list: device id (%llu), empty (%d), count(%llu)\n", found ? "Found" : "Not found", devId, m_LeDevList.empty(), (unsigned long long)m_LeDevList.size());
     return found;
 }
 
@@ -175,7 +175,7 @@ BtrLeMgrBase::deleteFromDiscoveryList (
     if(it != m_LeDevList.end()) {
         delete ((stBtLeDevList *)(it->second));
         m_LeDevList.erase(devId);
-        BTRLEMGRLOG_INFO("Removed from LE Discovered Devices list: device id (%llu), empty (%d), count(%d)\n", devId, m_LeDevList.empty(), m_LeDevList.size());
+        BTRLEMGRLOG_INFO("Removed from LE Discovered Devices list: device id (%llu), empty (%d), count(%llu)\n", devId, m_LeDevList.empty(), (unsigned long long)m_LeDevList.size());
     }
 }
 
