@@ -132,7 +132,7 @@ char* getSTBMac()
 void setSTBMac(char* apStbMac)
 {
     if(apStbMac) {
-        strncpy(gpcSTBMac, apStbMac, MAX_MACADDR_SIZE);
+        strncpy(gpcSTBMac, apStbMac, MAX_MACADDR_SIZE-1); //CID :63754: Buffer not null terminated
         BTRLEMGRLOG_DEBUG("Set STB Mac as [%s].\n\n", gpcSTBMac);
     }
 }
@@ -333,7 +333,7 @@ char* getRfcPrefUrl()
 
     if (status == WDMP_SUCCESS) {
         BTRLEMGRLOG_INFO("name = %s, type = %d, value = %s\n", param.name, param.type, param.value);
-        strncpy(prefUrl, param.value, MAX_RFC_URL_SIZE);
+        strncpy(prefUrl, param.value, MAX_RFC_URL_SIZE-1); //CID :163644 Buffer not null terminate
     }
 
     if(prefUrl[0] != '\0') {
@@ -355,7 +355,7 @@ void setRfcUrl(char* apRfcUrl)
 {
     if(apRfcUrl) {
         memset(gpcRfcUrl, 0, MAX_RFC_URL_SIZE);
-        strncpy(gpcRfcUrl, apRfcUrl, MAX_RFC_URL_SIZE);
+        strncpy(gpcRfcUrl, apRfcUrl, MAX_RFC_URL_SIZE-1); //CID :163796 Buffer not null terminated 
         BTRLEMGRLOG_DEBUG("Set RFC Reporting URL [%s].\n\n", gpcRfcUrl);
     }
 }
